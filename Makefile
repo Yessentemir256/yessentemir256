@@ -4,4 +4,13 @@ postgres:
 createdb:
 	docker exec -it yessentemir createdb --username=root --owner=root yessentemir
 
-.PHONY: postgres createdb
+dropdb:
+	docker exec -it yessentemir dropdb --username=root --owner=root yessentemir
+
+migrateup:
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/yessentemir?sslmode=disable" -verbose up
+
+migratedown:
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/yessentemir?sslmode=disable" -verbose down
+
+.PHONY: postgres createdb dropdb migrateup migratedown
