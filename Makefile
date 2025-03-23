@@ -5,7 +5,7 @@ createdb:
 	docker exec -it yessentemir createdb --username=root --owner=root yessentemir
 
 dropdb:
-	docker exec -it yessentemir dropdb --username=root --owner=root yessentemir
+	docker exec -it yessentemir dropdb yessentemir
 
 migrateup:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5433/yessentemir?sslmode=disable" -verbose up
