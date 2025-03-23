@@ -1,5 +1,6 @@
 CREATE TABLE "users" (
-  "username" varchar PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
+  "username" varchar(40) UNIQUE NOT NULL,
   "hashed_password" varchar NOT NULL,
   "full_name" varchar NOT NULL,
   "email" varchar UNIQUE NOT NULL,
@@ -16,8 +17,8 @@ CREATE TABLE "essays" (
 
 CREATE TABLE "comments" (
   "id" bigserial PRIMARY KEY,
-  "owner" varchar NOT NULL,
-  "essay_id" integer NOT NULL,
+  "owner" bigint NOT NULL,
+  "essay_id" bigint NOT NULL,
   "content" text NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
@@ -26,6 +27,6 @@ CREATE INDEX ON "comments" ("essay_id");
 
 CREATE INDEX ON "comments" ("owner");
 
-ALTER TABLE "comments" ADD FOREIGN KEY ("owner") REFERENCES "users" ("username");
+ALTER TABLE "comments" ADD FOREIGN KEY ("owner") REFERENCES "users" ("id");
 
 ALTER TABLE "comments" ADD FOREIGN KEY ("essay_id") REFERENCES "essays" ("id");
